@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "chiungyaollm"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "python-dotenv"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
