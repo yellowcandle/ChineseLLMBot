@@ -8,5 +8,6 @@ Currently the python script can generate tweet responses in the style of the Tai
 
 ## To Do
 
+- Implement a twitter bot thet will generate a tweet at a certain interval of time
 - Implement a twitter bot that will reply to tweets that @ the bot account.  
 - Implement locally run LLM models.
