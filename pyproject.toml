@@ -2,15 +2,15 @@
 name = "chiungyaollm"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Replit user <<>>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-requests = "python-dotenv"
+python = "^3.10"
+feedparser = "^6.0.10"
+requests = "^2.31.0"
+tweepy = "^4.14.0"
 
-[tool.poetry.group.dev.dependencies]
-pylint = "^3.0.2"
 
 [build-system]
 requires = ["poetry-core"]
