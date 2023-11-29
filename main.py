@@ -3,6 +3,7 @@ import re
 import feedparser
 import tweepy
 from litellm import completion
+import random
 
 # Move dotenv import here if needed
 # from dotenv import load_dotenv
@@ -30,10 +31,19 @@ def response_output(response):
   content = response['choices'][0]['message']['content']
   return content  # Return the content so it can be used elsewhere
 
+def randomize_prompt():
+
+  # Assuming list_of_strings is a list containing strings from which you want to select
+  list_of_prompts = ["使用台灣作家瓊瑤的寫作風格重寫輸入的字句，必須在140字元以內!", "使用作家金庸的寫作風格重寫輸入的字句，必須在140字元以內!","使用文言文重寫輸入的字句，必須在140字元以內!"]
+  selected_string = random.choice(list_of_prompts)
+  return selected_string
+
+selected_string = randomize_prompt()
 
 url = 'https://www.info.gov.hk/gia/rss/general_zh.xml'
 feed = feedparser.parse(url)
 first_summary_text = None
+
 
 if feed.entries:
   first_summary_text = re.sub('<[^<]+?>', '',
@@ -43,7 +53,7 @@ my_secret = os.environ['OPENAI_API_KEY']
 if first_summary_text:
   response = completion(model="gpt-3.5-turbo",
                         messages=[{
-                            "content": "使用台灣作家瓊瑤的寫作風格重寫輸入的字句，必須在140字元以內!",
+                            "content": selected_string,
                             "role": "system"
                         }, {
                             "content": first_summary_text,
@@ -55,6 +65,6 @@ response_text = response_output(response)  # This captures the return value from
 # Finally, tweet the content if it exists
 
 if response_text:
-  tweet_text = first_summary_text + "\n\n" + response_text
+  tweet_text = first_summary_text + "\n\n" + response_text + "\n\n" + "#中文 #文學"
   tweet_content(tweet_text)
   print(tweet_text)
