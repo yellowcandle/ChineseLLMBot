@@ -53,6 +53,7 @@ if first_summary_text:
 # Now, we get the content from the response output using response_output function
 response_text = response_output(response)  # This captures the return value from response_output
 # Finally, tweet the content if it exists
+
 if response_text:
   tweet_text = first_summary_text + "\n\n" + response_text
   tweet_content(tweet_text)
