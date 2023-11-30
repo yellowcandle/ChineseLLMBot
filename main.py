@@ -32,9 +32,11 @@ class TwitterClient:
 
     def tweet(self, text, in_reply_to_tweet_id=None):
         # Checking if 'in_reply_to_tweet_id' is not None to decide on first tweet or reply
-        method = self.client.create_tweet if in_reply_to_tweet_id is None else self.client.reply
         try:
-            response = method(text=text, in_reply_to_tweet_id=in_reply_to_tweet_id)
+            if in_reply_to_tweet_id is None:
+                response = self.client.create_tweet(text=text)
+            else:
+                response = self.client.create_tweet(text=text, in_reply_to_tweet_id=in_reply_to_tweet_id)
             print("Tweet successfully posted!")
             return response
         except tweepy.TweepyException as e:
@@ -56,13 +58,13 @@ def generate_response(prompt, entry_text):
                           }])
     return response['choices'][0]['message']['content']
 
-def select_random_prompt():
+def select_prompt_in_sequence(index):
     prompts = [
         "使用台灣作家瓊瑤的寫作風格重寫輸入的字句",
         "使用作家金庸的寫作風格重寫輸入的字句",
-        "使用文言文重寫輸入的字句"
+        "使用古典文言重寫輸入的字句為一首詩"
     ]
-    return random.choice(prompts)
+    return prompts[index % len(prompts)]
 
 def main():
     twitter_api_key = os.environ.get('TWITTER_API_KEY')
@@ -71,8 +73,8 @@ def main():
     twitter_access_secret = os.environ.get('TWITTER_ACCESS_SECRET')
 
     twitter_client = TwitterClient(twitter_api_key, twitter_api_secret, twitter_access_token, twitter_access_secret)
-
-    selected_prompt = select_random_prompt()
+    index = 0
+    selected_prompt = select_prompt_in_sequence(index)
 
     rss_feed_url = 'https://www.info.gov.hk/gia/rss/general_zh.xml'
     feed = feedparser.parse(rss_feed_url)
@@ -87,7 +89,7 @@ def main():
     if response_text:
         suffix = "#中文 #文學"
         tweet_text = f"{first_entry_title}\n\n{response_text}"
-        tweets = split_into_tweets(tweet_text, max_length=180 - len(suffix) - 1)
+        tweets = split_into_tweets(tweet_text, max_length=140 - len(suffix) - 1)
 
         conversation_id = None
         for tweet in tweets:
