@@ -4,7 +4,6 @@ import feedparser
 from litellm import completion
 import random
 import tweepy
-# schedule is imported but never used; you might want to remove it if it's not needed later on
 
 # Helper function to split text into tweet-sized segments
 def split_into_tweets(text, max_length=280):
