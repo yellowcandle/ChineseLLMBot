@@ -6,6 +6,8 @@ Inspired by [this tweet](https://twitter.com/shaun_meh/status/172715646450944827
 
 Tweet in the style of 瓊瑤 and other Chinese novelists.
 
+The bot is currently live at [@chineseLLMbot](https://twitter.com/chinesellmbot)
+
 ## To Do
 
 - Implement a twitter bot thet will generate a tweet at a certain interval of time
