@@ -7,17 +7,17 @@ import tweepy
 
 # Helper function to split text into tweet-sized segments
 def split_into_tweets(text, max_length=280):
-    words = text.split()
     tweets = []
-    current_tweet = ''
-    for word in words:
-        if len(current_tweet) + len(word) + 1 > max_length:
-            tweets.append(current_tweet)
-            current_tweet = word
-        else:
-            current_tweet += (' ' + word) if current_tweet else word
-    if current_tweet:
-        tweets.append(current_tweet)
+    while len(text) > max_length:
+        # Find the last space within the max_length
+        space_index = text.rfind(' ', 0, max_length)
+        # If no space is found, hard break at max_length
+        if space_index == -1:
+            space_index = max_length
+        # Split at space_index
+        tweets.append(text[:space_index])
+        text = text[space_index:].lstrip()  # Remove leading whitespace for the new tweet
+    tweets.append(text)  # Add the last chunk of text
     return tweets
 
 class TwitterClient:
