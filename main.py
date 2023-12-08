@@ -2,7 +2,6 @@ import os
 import re
 import feedparser
 from litellm import completion
-import random
 import tweepy
 
 # Helper function to split text into tweet-sized segments
