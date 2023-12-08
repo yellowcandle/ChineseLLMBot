@@ -1,4 +1,3 @@
-re
 feedparser
 litellm
 tweepy
