@@ -47,7 +47,7 @@ def extract_text_without_html(summary):
 
 def generate_response(prompt, entry_text):
     # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
-    response = completion(model="perplexity/pplx-70b-chat",
+    response = completion(model="perplexity/pplx-70b-online",
                           messages=[{
                               "role": "system",
                               "content": prompt
@@ -59,8 +59,8 @@ def generate_response(prompt, entry_text):
 
 def select_prompt_in_sequence(index):
     prompts = [
-        "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句",
-        "你是香港人，使用作家金庸的寫作風格重寫輸入的字句",
+        "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首詩",
+        "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一首詩",
         "你是香港人，使用古典文言重寫輸入的字句為一首詩"
     ]
     return prompts[index % len(prompts)]
