@@ -1,10 +1,12 @@
-# ChiungYaoLLM
+# ChineseLLMBot
 
 ## Introduction
 
 Inspired by [this tweet](https://twitter.com/shaun_meh/status/1727156464509448276)  
 
-Currently the python script can generate tweet responses in the style of the Taiwanese novelist Chiung Yao (瓊瑤).
+Tweet in the style of 瓊瑤 and other Chinese novelists.
+
+The bot is currently live at [@chineseLLMbot](https://twitter.com/chinesellmbot)
 
 ## To Do
 

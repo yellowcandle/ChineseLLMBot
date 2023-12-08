@@ -6,6 +6,7 @@ import tweepy
 
 # Helper function to split text into tweet-sized segments
 def split_into_tweets(text, max_length=280):
+
     tweets = []
     while len(text) > max_length:
         # Find the last space within the max_length
@@ -17,6 +18,7 @@ def split_into_tweets(text, max_length=280):
         tweets.append(text[:space_index])
         text = text[space_index:].lstrip()  # Remove leading whitespace for the new tweet
     tweets.append(text)  # Add the last chunk of text
+
     return tweets
 
 class TwitterClient:
@@ -46,7 +48,9 @@ def extract_text_without_html(summary):
 
 def generate_response(prompt, entry_text):
     # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
+
     response = completion(model="perplexity/pplx-70b-online",
+
                           messages=[{
                               "role": "system",
                               "content": prompt
@@ -58,9 +62,11 @@ def generate_response(prompt, entry_text):
 
 def select_prompt_in_sequence(index):
     prompts = [
+
         "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首詩",
         "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一首詩",
         "你是香港人，使用古典文言重寫輸入的字句為一首詩"
+
     ]
     return prompts[index % len(prompts)]
 
