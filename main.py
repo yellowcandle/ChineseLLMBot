@@ -7,17 +7,19 @@ import tweepy
 
 # Helper function to split text into tweet-sized segments
 def split_into_tweets(text, max_length=280):
-    words = text.split()
+
     tweets = []
-    current_tweet = ''
-    for word in words:
-        if len(current_tweet) + len(word) + 1 > max_length:
-            tweets.append(current_tweet)
-            current_tweet = word
-        else:
-            current_tweet += (' ' + word) if current_tweet else word
-    if current_tweet:
-        tweets.append(current_tweet)
+    while len(text) > max_length:
+        # Find the last space within the max_length
+        space_index = text.rfind(' ', 0, max_length)
+        # If no space is found, hard break at max_length
+        if space_index == -1:
+            space_index = max_length
+        # Split at space_index
+        tweets.append(text[:space_index])
+        text = text[space_index:].lstrip()  # Remove leading whitespace for the new tweet
+    tweets.append(text)  # Add the last chunk of text
+
     return tweets
 
 class TwitterClient:
@@ -47,7 +49,9 @@ def extract_text_without_html(summary):
 
 def generate_response(prompt, entry_text):
     # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
-    response = completion(model="gpt-3.5-turbo",
+
+    response = completion(model="perplexity/pplx-70b-online",
+
                           messages=[{
                               "role": "system",
                               "content": prompt
@@ -59,9 +63,11 @@ def generate_response(prompt, entry_text):
 
 def select_prompt_in_sequence(index):
     prompts = [
-        "使用台灣作家瓊瑤的寫作風格重寫輸入的字句",
-        "使用作家金庸的寫作風格重寫輸入的字句",
-        "使用古典文言重寫輸入的字句為一首詩"
+
+        "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首詩",
+        "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一首詩",
+        "你是香港人，使用古典文言重寫輸入的字句為一首詩"
+
     ]
     return prompts[index % len(prompts)]
 
@@ -83,6 +89,8 @@ def main():
         first_entry_title = extract_text_without_html(feed.entries[0].title)
 
         openai_api_key = os.environ.get('OPENAI_API_KEY')  # Ensure that the api key is used when calling the API
+        perplexity_api_key = os.environ.get('PERPLEXITYAI_API_KEY')
+              # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
         response_text = generate_response(selected_prompt, first_entry_title)
 
     if response_text:
