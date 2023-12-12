@@ -49,7 +49,7 @@ def extract_text_without_html(summary):
 def generate_response(prompt, entry_text):
     # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
 
-    response = completion(model="perplexity/pplx-70b-online",
+    response = completion(model="perplexity/pplx-70b-chat",
 
                           messages=[{
                               "role": "system",
@@ -60,15 +60,18 @@ def generate_response(prompt, entry_text):
                           }])
     return response['choices'][0]['message']['content']
 
-def select_prompt_in_sequence(index):
+import random
+
+def select_prompt_in_sequence():
     prompts = [
 
-        "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首詩",
-        "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一首詩",
-        "你是香港人，使用古典文言重寫輸入的字句為一首詩"
+      "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首詩",
+      "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一首詩",
+      "你是香港人，使用古典文言重寫輸入的字句為一首詩"
 
     ]
-    return prompts[index % len(prompts)]
+    random.shuffle(prompts)
+    return prompts[0]
 
 def main():
     twitter_api_key = os.environ.get('TWITTER_API_KEY')
@@ -77,8 +80,8 @@ def main():
     twitter_access_secret = os.environ.get('TWITTER_ACCESS_SECRET')
 
     twitter_client = TwitterClient(twitter_api_key, twitter_api_secret, twitter_access_token, twitter_access_secret)
-    index = 0
-    selected_prompt = select_prompt_in_sequence(index)
+
+    selected_prompt = select_prompt_in_sequence()
 
     rss_feed_url = 'https://www.info.gov.hk/gia/rss/general_zh.xml'
     feed = feedparser.parse(rss_feed_url)
