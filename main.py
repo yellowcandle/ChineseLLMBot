@@ -57,7 +57,9 @@ def generate_response(prompt, entry_text):
                           }, {
                               "role": "user",
                               "content": entry_text
-                          }])
+                          }],
+                         temperature=0.1,
+                         max_tokens=1280)
     return response['choices'][0]['message']['content']
 
 import random
@@ -65,9 +67,9 @@ import random
 def select_prompt_in_sequence():
     prompts = [
 
-      "你是香港人，使用作家瓊瑤的寫作風格重寫輸入的字句為一首有關愛情的中文詩歌",
-      "你是香港人，使用作家金庸的寫作風格重寫輸入的字句為一篇短篇武俠小說",
-      "你是香港人，使用古典文言重寫輸入的字句為一篇皇帝的聖旨"
+      # "你是香港人，使用中文作家瓊瑤的寫作風格重寫輸入的字句為一首中文情詩，長度在 280 字內。",
+      # "你是香港人，使用中文作家金庸的寫作風格重寫輸入的字句為一篇中文短篇武俠小說，長度在 280 字內。",
+      "你是香港人，使用中文古典文言重寫輸入的字句為一篇皇帝的聖旨，長度在 280 字內。"
 
     ]
     random.shuffle(prompts)
