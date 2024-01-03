@@ -92,7 +92,7 @@ def main():
     if feed.entries:
         first_entry_title = extract_text_without_html(feed.entries[0].title)
 
-        openai_api_key = os.environ.get('OPENAI_API_KEY')  # Ensure that the api key is used when calling the API
+        # openai_api_key = os.environ.get('OPENAI_API_KEY')  # Ensure that the api key is used when calling the API
         perplexity_api_key = os.environ.get('PERPLEXITYAI_API_KEY')
               # Calling the OpenAI API to generate a response based on the text format provided by a random prompt
         response_text = generate_response(selected_prompt, first_entry_title)
