@@ -98,7 +98,7 @@ def main():
         response_text = generate_response(selected_prompt, first_entry_title)
 
     if response_text:
-        suffix = "#中文 #文學"
+        suffix = "#中文 #文學 #宣旨 #奉天承運皇帝詔曰 #欽此"
         tweet_text = f"{first_entry_title}\n\n{response_text}"
         tweets = split_into_tweets(tweet_text, max_length=140 - len(suffix) - 1)
 
