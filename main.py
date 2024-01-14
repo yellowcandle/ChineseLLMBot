@@ -58,7 +58,7 @@ def generate_response(prompt, entry_text):
                               "role": "user",
                               "content": entry_text
                           }],
-                         temperature=0.1,
+                         temperature=0.3,
                          max_tokens=1280)
     return response['choices'][0]['message']['content']
 
@@ -98,7 +98,7 @@ def main():
         response_text = generate_response(selected_prompt, first_entry_title)
 
     if response_text:
-        suffix = "#中文 #文學 #宣旨 #奉天承運皇帝詔曰 #欽此"
+        suffix = "#中文 #文學"
         tweet_text = f"{first_entry_title}\n\n{response_text}"
         tweets = split_into_tweets(tweet_text, max_length=140 - len(suffix) - 1)
 
